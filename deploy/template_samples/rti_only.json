@@ -76,7 +76,6 @@
       }
     ]
   },
-  "databases": [],
   "software": {
     "storage_account_sapbits": {
       "is_existing": false,
