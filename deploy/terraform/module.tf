@@ -68,6 +68,7 @@ module "app_tier" {
 
 # Generate output files
 module "output_files" {
+  module_depends_on            = [ module.common_infrastructure, module.jumpbox, module.hdb_node, module.app_tier ]
   source                       = "./modules/output_files"
   application                  = var.application
   databases                    = var.databases
