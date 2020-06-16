@@ -1,4 +1,4 @@
-### <img src="assets/UnicornSAPBlack256x256.png" width="64px"> SAP Automation <!-- omit in toc -->
+### <img src="../assets/UnicornSAPBlack256x256.png" width="64px"> SAP Automation > Terraform <!-- omit in toc -->
 # Automated SAP Deployments in Azure Cloud <!-- omit in toc -->
 Master Branch's status: [![Build Status](https://dev.azure.com/azuresaphana/Azure-SAP-HANA/_apis/build/status/Azure.sap-hana.v2?branchName=master)](https://dev.azure.com/azuresaphana/Azure-SAP-HANA/_build/latest?definitionId=6&branchName=master)
 
@@ -9,12 +9,6 @@ The templates are split into:
 which deploy the infrastructure components (such as VMs, network, storage) in Azure.
 - **Ansible playbooks**
 which run different roles to configure and VMs and install SAP HANA and required applications on the already deployed infrastructure.
-
-<br>
-
-Usage
-  Getting started
-
 
 <br>
 
