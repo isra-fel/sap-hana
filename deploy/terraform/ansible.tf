@@ -4,7 +4,7 @@
     2. ansible_playbook: run playbook
 +--------------------------------------4--------------------------------------*/
 resource "null_resource" "prepare-rti-files" {
-  depends_on = [module.hdb_node.dbnode-data-disk-att, module.jumpbox.prepare-rti, module.jumpbox.vm-windows]
+  depends_on = [module.output_files.ansible-inventory, module.output_files.output-json]
 
   triggers = {
     hosts  = sha1(local.file_hosts)
@@ -37,7 +37,16 @@ resource "null_resource" "prepare-rti-files" {
 
 resource "null_resource" "ansible_playbook" {
   count      = var.options.ansible_execution ? 1 : 0
-  depends_on = [null_resource.prepare-rti-files]
+  depends_on = [null_resource.prepare-rti-files, module.hdb_node.dbnode-data-disk-att, module.jumpbox.prepare-rti, module.jumpbox.vm-windows]
+
+  connection {
+    type        = "ssh"
+    host        = module.jumpbox.rti-info.public_ip_address
+    user        = module.jumpbox.rti-info.authentication.username
+    private_key = module.jumpbox.rti-info.authentication.type == "key" ? file(var.sshkey.path_to_private_key) : null
+    password    = lookup(module.jumpbox.rti-info.authentication, "password", null)
+    timeout     = var.ssh-timeout
+  }
 
   # Run Ansible Playbook on jumpbox if ansible_execution set to true
   provisioner "remote-exec" {
