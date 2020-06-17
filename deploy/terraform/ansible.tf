@@ -4,7 +4,7 @@
     2. ansible_playbook: run playbook
 +--------------------------------------4--------------------------------------*/
 resource "null_resource" "prepare_rti_files" {
-  depends_on = [module.output_files.ansible-inventory, module.output_files.output-json]
+  depends_on = [module.output_files.ansible-inventory, module.output_files.output-json, module.jumpbox.prepare-rti]
 
   triggers = {
     hosts  = sha1(local.file_hosts)
@@ -37,7 +37,7 @@ resource "null_resource" "prepare_rti_files" {
 
 resource "null_resource" "ansible_playbook" {
   count      = var.options.ansible_execution ? 1 : 0
-  depends_on = [null_resource.prepare_rti_files, module.hdb_node.dbnode-data-disk-att, module.jumpbox.prepare-rti, module.jumpbox.vm-windows]
+  depends_on = [null_resource.prepare_rti_files, module.hdb_node.dbnode-data-disk-att, module.jumpbox.vm-windows]
 
   connection {
     type        = "ssh"
